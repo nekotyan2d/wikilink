@@ -1,5 +1,4 @@
 <template>
-    <Header />
     <main>
         <router-view />
     </main>
@@ -13,7 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import Header from "./components/Header.vue";
 import Modal from "./components/Modal.vue";
 import { useAppStore } from "./stores/app";
 
