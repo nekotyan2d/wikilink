@@ -11,7 +11,7 @@
         @link-clicked="onLinkClicked" />
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useApi } from "../composables/useApi";
 import WikiViewer from "../components/WikiViewer.vue";
 import { useAppStore } from "../stores/app";
@@ -19,7 +19,7 @@ import ProgressBar from "../components/ProgressBar.vue";
 
 const app = useAppStore();
 
-const { getRandomArticle, getArticleText, getArticleByName } = useApi();
+const { getArticleText, getArticleByName, getRandomArticles } = useApi();
 
 const title = ref("");
 const data = ref<any>();
@@ -27,9 +27,23 @@ const loading = ref(true);
 
 onMounted(async () => {
     try {
-        const randomArticle = await getRandomArticle();
+        const randomArticles = await getRandomArticles(2);
 
-        const pageId = randomArticle.query.random[0]!.id;
+        const articles = Object.values(randomArticles.query.pages);
+
+        app.fromArticle = {
+            pageid: articles[0]!.pageid,
+            title: articles[0]!.title,
+            description: articles[0]!.description,
+        };
+
+        app.toArticle = {
+            pageid: articles[1]!.pageid,
+            title: articles[1]!.title,
+            description: articles[1]!.description,
+        };
+
+        const pageId = app.fromArticle.pageid;
 
         const randomArticleData = await getArticleText(pageId);
 
@@ -54,6 +68,9 @@ async function onLinkClicked(href: string) {
         const page = decodeURIComponent(pagePath);
 
         const articleData = await getArticleByName(page);
+
+        app.currentArticleId = articleData.parse.pageid;
+
         title.value = articleData.parse.title;
         data.value = articleData;
     } catch (error) {
@@ -61,6 +78,15 @@ async function onLinkClicked(href: string) {
         loading.value = false;
     }
 }
+
+watch(
+    () => app.$state.currentArticleId,
+    (newId) => {
+        if (newId === app.toArticle?.pageid) {
+            app.showModal("Ура!", "Ты дошел до цели за " + app.steps + " переходов!");
+        }
+    },
+);
 </script>
 <style lang="scss">
 .loading {

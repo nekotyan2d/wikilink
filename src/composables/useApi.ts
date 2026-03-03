@@ -39,6 +39,31 @@ export const useApi = () => {
             };
         };
     };
+    const getRandomArticles = async (count: number = 1) => {
+        const params = {
+            action: "query",
+            format: "json",
+            generator: "random",
+            grnnamespace: "0",
+            grnlimit: count.toString(),
+            prop: "description|pageprops",
+            ppprop: "wikibase_item",
+        };
+
+        return (await fetchData(params)) as {
+            batchcomplete: string;
+            query: {
+                pages: {
+                    [key: string]: {
+                        pageid: number;
+                        ns: number;
+                        title: string;
+                        description?: string;
+                    };
+                };
+            };
+        };
+    };
 
     const getArticleText = async (pageId: number) => {
         const params = {
@@ -74,5 +99,6 @@ export const useApi = () => {
         getRandomArticle,
         getArticleText,
         getArticleByName,
+        getRandomArticles,
     };
 };
