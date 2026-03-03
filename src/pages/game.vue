@@ -18,6 +18,7 @@ import WikiViewer from "../components/WikiViewer.vue";
 import { useAppStore } from "../stores/app";
 import ProgressBar from "../components/ProgressBar.vue";
 import Header from "../components/Header.vue";
+import { useRouter } from "vue-router";
 
 const app = useAppStore();
 
@@ -26,6 +27,8 @@ const { getArticleText, getArticleByName, getRandomArticles } = useApi();
 const title = ref("");
 const data = ref<any>();
 const loading = ref(true);
+
+const router = useRouter();
 
 onMounted(async () => {
     try {
@@ -85,7 +88,10 @@ watch(
     () => app.$state.currentArticleId,
     (newId) => {
         if (newId === app.toArticle?.pageid) {
-            app.showModal("Ура!", "Ты дошел до цели за " + app.steps + " переходов!");
+            app.showModal("Ура!", "Ты дошел до цели за " + app.steps + " переходов!", () => {
+                app.resetGame();
+                router.replace("/");
+            });
         }
     },
 );

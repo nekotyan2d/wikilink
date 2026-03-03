@@ -18,16 +18,26 @@ export const useAppStore = defineStore("app", () => {
     const modalData = ref({
         title: "",
         message: "",
+        onConfirm: undefined as (() => void) | undefined,
     });
 
-    function showModal(title: string, message: string) {
+    function showModal(title: string, message: string, onConfirm?: () => void) {
         modalData.value.title = title;
         modalData.value.message = message;
+        modalData.value.onConfirm = onConfirm;
     }
 
     function closeModal() {
         modalData.value.title = "";
         modalData.value.message = "";
+        modalData.value.onConfirm = undefined;
+    }
+
+    function resetGame() {
+        steps.value = 0;
+        fromArticle.value = null;
+        toArticle.value = null;
+        currentArticleId.value = null;
     }
 
     return {
@@ -37,6 +47,8 @@ export const useAppStore = defineStore("app", () => {
         toArticle,
 
         currentArticleId,
+
+        resetGame,
 
         modalData,
         showModal,

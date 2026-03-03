@@ -5,16 +5,22 @@
         <div class="modal-content">
             <h2>{{ title }}</h2>
             <p>{{ message }}</p>
-            <button @click="$emit('close')">ОК</button>
+            <button @click="onOkClicked">ОК</button>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
 const emit = defineEmits(["close"]);
 
+function onOkClicked() {
+    emit("close");
+    props.onConfirm?.();
+}
+
 const props = defineProps<{
     title: string;
     message: string;
+    onConfirm?: () => void;
 }>();
 </script>
 <style lang="scss">

@@ -7,6 +7,7 @@
             v-if="app.$state.modalData.title"
             :title="app.$state.modalData.title"
             :message="app.$state.modalData.message"
+            @confirm="app.modalData.onConfirm"
             @close="app.closeModal()" />
     </Teleport>
 </template>
