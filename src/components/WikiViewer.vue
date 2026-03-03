@@ -22,6 +22,8 @@ const wikiViewer = ref<HTMLElement | null>(null);
 watch(wikiViewer, () => {
     const wikiViewerEl = wikiViewer.value;
 
+    wikiViewerEl?.scrollIntoView();
+
     if (wikiViewerEl) {
         const links = wikiViewerEl.querySelectorAll("a");
 
