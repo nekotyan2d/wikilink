@@ -40,6 +40,8 @@ const props = defineProps<{
         background-color: #fff;
         border-radius: 16px;
         padding: 16px;
+        width: 100%;
+        max-width: 500px;
     }
 }
 </style>
