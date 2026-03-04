@@ -46,8 +46,10 @@ export const useApi = () => {
             generator: "random",
             grnnamespace: "0",
             grnlimit: count.toString(),
-            prop: "description|pageprops",
-            ppprop: "wikibase_item",
+            prop: "extracts",
+            exintro: "1",
+            explaintext: "1",
+            exsentences: "2",
         };
 
         return (await fetchData(params)) as {
@@ -58,7 +60,7 @@ export const useApi = () => {
                         pageid: number;
                         ns: number;
                         title: string;
-                        description?: string;
+                        extract?: string;
                     };
                 };
             };
