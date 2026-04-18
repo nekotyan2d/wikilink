@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from "vue-router";
 const pinia = createPinia();
 
 const router = createRouter({
-    history: createWebHistory("/wikilink/"),
+    history: createWebHistory("/wikilink"),
     routes: [
         {
             path: "/",
