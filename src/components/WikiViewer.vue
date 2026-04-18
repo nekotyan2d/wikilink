@@ -6,7 +6,7 @@
         v-html="props.text"></div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps<{
     text: string;
