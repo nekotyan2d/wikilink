@@ -39,13 +39,13 @@ onMounted(async () => {
         app.fromArticle = {
             pageid: articles[0]!.pageid,
             title: articles[0]!.title,
-            description: articles[0]!.description,
+            description: articles[0]!.extract,
         };
 
         app.toArticle = {
             pageid: articles[1]!.pageid,
             title: articles[1]!.title,
-            description: articles[1]!.description,
+            description: articles[1]!.extract,
         };
 
         const pageId = app.fromArticle.pageid;
